@@ -1,0 +1,59 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AS	Makefile	/^AS		:= $(CROSS)as$/;"	m
+ASFILES	Makefile	/^ASFILES	:= boot.s$/;"	m
+ASFLAGS	Makefile	/^ASFLAGS	:= $/;"	m
+CC	Makefile	/^CC		:= $(CROSS)gcc$/;"	m
+CFILES	Makefile	/^CFILES	:= kernel.c$/;"	m
+CFLAGS	Makefile	/^CFLAGS	:= -std=gnu99 -ffreestanding -O2 -Wall -Wextra$/;"	m
+COBJS	Makefile	/^COBJS	:= $(CFILES:.c=.o)$/;"	m
+COLOR_BLACK	kernel.c	/^	COLOR_BLACK = 0,$/;"	e	enum:vga_color	file:
+COLOR_BLUE	kernel.c	/^	COLOR_BLUE = 1,$/;"	e	enum:vga_color	file:
+COLOR_BROWN	kernel.c	/^	COLOR_BROWN = 6,$/;"	e	enum:vga_color	file:
+COLOR_CYAN	kernel.c	/^	COLOR_CYAN = 3,$/;"	e	enum:vga_color	file:
+COLOR_DARK_GREY	kernel.c	/^	COLOR_DARK_GREY = 8,$/;"	e	enum:vga_color	file:
+COLOR_GREEN	kernel.c	/^	COLOR_GREEN = 2,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_BLUE	kernel.c	/^	COLOR_LIGHT_BLUE = 9,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_BROWN	kernel.c	/^	COLOR_LIGHT_BROWN = 14,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_CYAN	kernel.c	/^	COLOR_LIGHT_CYAN = 11,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_GREEN	kernel.c	/^	COLOR_LIGHT_GREEN = 10,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_GREY	kernel.c	/^	COLOR_LIGHT_GREY = 7,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_MAGENTA	kernel.c	/^	COLOR_LIGHT_MAGENTA = 13,$/;"	e	enum:vga_color	file:
+COLOR_LIGHT_RED	kernel.c	/^	COLOR_LIGHT_RED = 12,$/;"	e	enum:vga_color	file:
+COLOR_MAGENTA	kernel.c	/^	COLOR_MAGENTA = 5,$/;"	e	enum:vga_color	file:
+COLOR_RED	kernel.c	/^	COLOR_RED = 4,$/;"	e	enum:vga_color	file:
+COLOR_WHITE	kernel.c	/^	COLOR_WHITE = 15,$/;"	e	enum:vga_color	file:
+CROSS	Makefile	/^CROSS	:= i686-elf-$/;"	m
+EXT	Makefile	/^EXT		:= iso$/;"	m
+LD	Makefile	/^LD		:= $(CROSS)gcc$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS	:= -ffreestanding -O2$/;"	m
+LDLIBS	Makefile	/^LDLIBS	:= -nostdlib -lgcc$/;"	m
+LINKER	Makefile	/^LINKER	:= linker.ld$/;"	m
+OBJS	Makefile	/^OBJS	:= $(SOBJS) $(COBJS)$/;"	m
+PROJ	Makefile	/^PROJ	:= myos$/;"	m
+SOBJS	Makefile	/^SOBJS	:= $(ASFILES:.s=.o)$/;"	m
+VGA_HEIGHT	kernel.c	/^static const size_t VGA_HEIGHT = 25;$/;"	v	file:
+VGA_WIDTH	kernel.c	/^static const size_t VGA_WIDTH = 80;$/;"	v	file:
+_start	boot.s	/^_start:$/;"	l
+inb	io.c	/^static inline uint8_t inb(uint16_t port) {$/;"	f	file:
+kernel_main	kernel.c	/^void kernel_main() {$/;"	f
+make_color	kernel.c	/^uint8_t make_color(enum vga_color fg, enum vga_color bg) {$/;"	f
+make_vgaentry	kernel.c	/^uint16_t make_vgaentry(char c, uint8_t color) {$/;"	f
+outb	io.c	/^static inline void outb(uint16_t port, uint8_t val) {$/;"	f	file:
+stack_bottom	boot.s	/^stack_bottom:$/;"	l
+stack_top	boot.s	/^stack_top:$/;"	l
+strlen	kernel.c	/^size_t strlen(const char* str) {$/;"	f
+terminal_buffer	kernel.c	/^uint16_t* terminal_buffer;$/;"	v
+terminal_color	kernel.c	/^uint8_t terminal_color;$/;"	v
+terminal_column	kernel.c	/^size_t terminal_column;$/;"	v
+terminal_initialize	kernel.c	/^void terminal_initialize() {$/;"	f
+terminal_putchar	kernel.c	/^void terminal_putchar(char c) {$/;"	f
+terminal_putentryat	kernel.c	/^void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {$/;"	f
+terminal_row	kernel.c	/^size_t terminal_row;$/;"	v
+terminal_setcolor	kernel.c	/^void terminal_setcolor(uint8_t color) {$/;"	f
+terminal_writestring	kernel.c	/^void terminal_writestring(const char* data) {$/;"	f
+vga_color	kernel.c	/^enum vga_color {$/;"	g	file:
