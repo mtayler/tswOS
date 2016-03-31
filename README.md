@@ -16,4 +16,4 @@ The .iso can be booted in a QEMU i386 environment by calling `make run` from the
 
 
 ####Thanks
-Huge thanks to the OSDev.org wiki, this project would undoubtedly not have gotten nearly this far without everyone who contributes to the wiki.
+Huge thanks to the [OSDev.org wiki](http://wiki.osdev.org), this project would undoubtedly not have gotten nearly this far without everyone who contributes to the wiki.
