@@ -132,6 +132,8 @@ void terminal_writestring(const char* data) {
 extern "C" /* Use C linkage for kernel_main. */
 #endif
 void kernel_main() {
+	outl(0x60, 0);	// Clear 0x60 (PS/2) I/O register
+
 	/* Initialize terminal interface */
 	terminal_initialize();
  
