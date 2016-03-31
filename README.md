@@ -6,7 +6,7 @@ An operating system being developed for learning purposes. So far, no plans to o
 Building
 --------
 ###Requires
-- GNU cross compiler targeting i686 systems using the ELF executable format - called as `i686-elf-gcc` in provided Makefile
+- GNU cross compiler targeting i686 systems using the ELF executable format -- called as `i686-elf-gcc` in provided Makefile
 - GRUB install compiled for i686 systems (for grub-mkrescue)
 - QEMU emulation platform
 
