@@ -3,6 +3,7 @@ PROJ	:= myos
 EXT		:= iso
 ASFILES	:= boot.s
 CFILES	:= $(notdir $(wildcard src/*.c))
+
 LINKER	:= linker.ld
 
 OBJDIR	:= build
@@ -11,6 +12,8 @@ SRCDIR	:= src
 SOBJS	:= $(addprefix $(OBJDIR)/,$(ASFILES:.s=.o))
 COBJS	:= $(addprefix $(OBJDIR)/,$(CFILES:.c=.o))
 OBJS	:= $(SOBJS) $(COBJS)
+
+VPATH	:= $(SRCDIR)
 
 #--- Tool Settings ---
 CROSS	:= i686-elf-
@@ -35,15 +38,15 @@ $(PROJ).$(EXT): $(OBJDIR)/$(PROJ).bin
 $(OBJDIR)/$(PROJ).bin: $(OBJS)
 	$(LD) -T $(SRCDIR)/$(LINKER) -o $@ $(LDFLAGS) $(OBJS) $(LDLIBS)
 
-$(COBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(CLIBS)
+$(COBJS): $(OBJDIR)/%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(SOBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.s
+$(SOBJS): $(OBJDIR)/%.o : %.s
 	$(AS) $(ASFLAGS) $< -o $@
 
 
 .PHONY: run
-run:
+run: $(PROJ).$(EXT)
 	qemu-system-i386 -cdrom $(PROJ).$(EXT)
 
 .PHONY: clean
