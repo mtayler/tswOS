@@ -13,6 +13,8 @@
 #if !defined(__i386__)
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
+
+#include "ps2.h"
  
 /* Hardware text mode color constants. */
 enum vga_color {
@@ -84,8 +86,10 @@ void terminal_scroll() {
 			terminal_buffer[prev_index] = terminal_buffer[index];
 		}
 	}
-	size_t index = (VGA_WIDTH-1)*VGA_WIDTH + (VGA_HEIGHT-1);
-	terminal_buffer[index] = make_vgaentry(' ', terminal_color);
+	for (size_t x=0; x < VGA_WIDTH; x++) {
+		size_t index = (VGA_HEIGHT-1)*VGA_WIDTH + x;
+		terminal_buffer[index] = make_vgaentry(' ', terminal_color);
+	}
 }
  
 void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
@@ -94,12 +98,22 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y) {
 }
  
 void terminal_putchar(char c) {
-	if (c != '\n') {
+	if (c == '\b') {
+		if (terminal_column > 0)
+			terminal_column--;
+
+		terminal_putentryat(' ', terminal_color, terminal_column, terminal_row);
+		return;
+	}
+	if (c == '\t') {
+		terminal_column += 4;
+	}
+	if (c != '\n' && c != '\t') {
 		terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
 	}
-	if (++terminal_column == VGA_WIDTH || c == '\n') {
+	if (++terminal_column >= VGA_WIDTH || c == '\n') {
 		terminal_column = 0;
-		if (terminal_row+2 == VGA_HEIGHT) {
+		if (terminal_row+1 >= VGA_HEIGHT) {
 			terminal_scroll();
 		}
 		else {
@@ -121,18 +135,8 @@ void kernel_main() {
 	/* Initialize terminal interface */
 	terminal_initialize();
  
-	/* Since there is no support for newlines in terminal_putchar
-         * yet, '\n' will produce some VGA specific character instead.
-         * This is normal.
-         */
 	terminal_writestring("Hello, kernel World!\n");
-	terminal_writestring("How are you?\n");
-	for (size_t i=0; i < VGA_HEIGHT+2; i++) {
-		char character[3] = { (char) i+97, '\n', '\0' };
-		terminal_writestring(character);
+	while (true) {
+		terminal_putchar(getchar());
 	}
-	terminal_writestring("Test wrapping with a really long string that has many characters in order to have the terminal \
-							wrap and see if it really works.\n");
-	terminal_writestring("Here.\n");
-	terminal_writestring("So amazing.\n");
 }
