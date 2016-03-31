@@ -3,3 +3,6 @@ build/*
 
 # Binary output
 *.iso
+
+# Personal config files
+.ycm_extra_conf.py
