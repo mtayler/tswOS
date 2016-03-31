@@ -4,8 +4,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "io.c"
- 
 /* Check if the compiler thinks we are targeting the wrong operating system. */
 #if defined(__linux__) || defined(__APPLE__)
 #error "You are not using a cross-compiler, you will most certainly run into trouble"
@@ -101,7 +99,7 @@ void terminal_putchar(char c) {
 	}
 	if (++terminal_column == VGA_WIDTH || c == '\n') {
 		terminal_column = 0;
-		if (terminal_row+1 == VGA_HEIGHT) {
+		if (terminal_row+2 == VGA_HEIGHT) {
 			terminal_scroll();
 		}
 		else {

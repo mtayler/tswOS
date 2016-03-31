@@ -2,11 +2,14 @@
 PROJ	:= myos
 EXT		:= iso
 ASFILES	:= boot.s
-CFILES	:= kernel.c
+CFILES	:= $(notdir $(wildcard src/*.c))
 LINKER	:= linker.ld
 
-SOBJS	:= $(ASFILES:.s=.o)
-COBJS	:= $(CFILES:.c=.o)
+OBJDIR	:= build
+SRCDIR	:= src
+
+SOBJS	:= $(addprefix $(OBJDIR)/,$(ASFILES:.s=.o))
+COBJS	:= $(addprefix $(OBJDIR)/,$(CFILES:.c=.o))
 OBJS	:= $(SOBJS) $(COBJS)
 
 #--- Tool Settings ---
@@ -15,32 +18,37 @@ AS		:= $(CROSS)as
 CC		:= $(CROSS)gcc
 LD		:= $(CROSS)gcc
 
-ASFLAGS	:= 
+ASFLAGS	:=
 CFLAGS	:= -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LDFLAGS	:= -ffreestanding -O2
 
 LDLIBS	:= -nostdlib -lgcc
 
 all: $(PROJ).$(EXT)
-	
-$(PROJ).$(EXT): $(PROJ).bin
-	mkdir -p isodir/boot/grub
-	cp -f $(PROJ).bin isodir/boot/
-	cp -f grub.cfg isodir/boot/grub/
-	grub-mkrescue -o $(PROJ).$(EXT) isodir
 
-$(PROJ).bin: $(OBJS)
-	$(LD) -T $(LINKER) -o $@ $(LDFLAGS) $(OBJS) $(LDLIBS)
+$(PROJ).$(EXT): $(OBJDIR)/$(PROJ).bin
+	mkdir -p $(OBJDIR)/isodir/boot/grub
+	cp -f $(OBJDIR)/$(PROJ).bin $(OBJDIR)/isodir/boot/
+	cp -f grub.cfg $(OBJDIR)/isodir/boot/grub/
+	grub-mkrescue -o $(PROJ).$(EXT) $(OBJDIR)/isodir
 
-# $(COBJS): %.o : %.c
-# 	$(CC) $(CLAGS) -c $< -o $@
+$(OBJDIR)/$(PROJ).bin: $(OBJS)
+	$(LD) -T $(SRCDIR)/$(LINKER) -o $@ $(LDFLAGS) $(OBJS) $(LDLIBS)
 
-$(SOBJS): %.o : %.s
+$(COBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(CLIBS)
+
+$(SOBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
+
+
+.PHONY: run
+run:
+	qemu-system-i386 -cdrom $(PROJ).$(EXT)
 
 .PHONY: clean
 clean:
 	$(RM) $(OBJS)
 	$(RM) $(PROJ).$(EXT)
-	$(RM) $(PROJ).bin
+	$(RM) $(OBJDIR)/$(PROJ).bin
 	$(RM) -r isodir

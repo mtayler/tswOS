@@ -1,3 +1,5 @@
+# Build directory
+build/*
+
 # Binary output
-myiso.bin
-myiso.iso
+*.iso
