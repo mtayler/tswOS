@@ -1,5 +1,5 @@
 #--- Source Files ---
-PROJ	:= myos
+PROJ	:= tswOS
 EXT		:= iso
 ASFILES	:= boot.s
 CFILES	:= $(notdir $(wildcard src/*.c))
