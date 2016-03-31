@@ -6,3 +6,4 @@ build/*
 
 # Personal config files
 .ycm_extra_conf.py
+tags
