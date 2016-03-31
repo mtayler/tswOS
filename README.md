@@ -11,4 +11,5 @@ Building
 - QEMU emulation platform
 
 If each requirement is available in your path, simply call `make` to create a bootable .iso called `tswOS.iso`.
+
 The .iso can be booted in a QEMU i386 environment by calling `make run`, or running `qemu-system-i386 -cdrom tswOS.iso`.
