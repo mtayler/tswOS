@@ -7,6 +7,7 @@ CFILES	:= $(notdir $(wildcard src/*.c))
 LINKER	:= linker.ld
 
 OBJDIR	:= build
+$(shell mkdir build 2>/dev/null)
 SRCDIR	:= src
 
 SOBJS	:= $(addprefix $(OBJDIR)/,$(ASFILES:.s=.o))
@@ -22,7 +23,7 @@ CC		:= $(CROSS)gcc
 LD		:= $(CROSS)gcc
 
 ASFLAGS	:=
-CFLAGS	:= -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+CFLAGS	:= -std=gnu99 -g -ffreestanding -O2 -Wall -Wextra
 LDFLAGS	:= -ffreestanding -O2
 
 LDLIBS	:= -nostdlib -lgcc
@@ -48,6 +49,10 @@ $(SOBJS): $(OBJDIR)/%.o : %.s
 .PHONY: run
 run: $(PROJ).$(EXT)
 	qemu-system-i386 -cdrom $(PROJ).$(EXT)
+
+.PHONY: bug
+bug: $(PROJ).$(EXT)
+	qemu-system-i386 -s -S -cdrom $(PROJ).$(EXT)
 
 .PHONY: clean
 clean:
