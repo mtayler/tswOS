@@ -1,5 +1,4 @@
 #include "io.h"
-#include "ps2.h"
 
 #define PORT (0x60)
 
@@ -15,17 +14,12 @@ static char scancode[0xF1] = {
 /*3*/	'b', 'n', 'm', ',', '.', '/','\x36','\x37',
 };
 
-/*
- * PS/2 keyboard input to code.
- * Currently only returns the scancode, until special
- * key functions are decided upon
- */
-char get_scancode() {
-	char c = 0;
-	outb(PORT, c);
+static int8_t get_scancode() {
+	outb(PORT, 0);
+	int8_t c = 0;
 	do {
-		if((char)inb(PORT) != c) {
-			c = (char)inb(PORT);
+		if(inb(PORT) != c) {
+			c = inb(PORT);
 			if (c > 0)
 				return c;
 		}

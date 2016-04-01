@@ -6,6 +6,4 @@
  */
 char getchar();
 
-char get_scancode();
-
 #endif // PS2_INCLUDED
