@@ -1,9 +1,17 @@
 # Build directory
-build/*
+build
 
 # Binary output
 *.iso
 
+# Building and linking stuff
+*.o
+*.d
+
+# Debug folder
+*.dSYM
+
 # Personal config files
 .ycm_extra_conf.py
+*.pyc
 tags
