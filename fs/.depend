@@ -1,0 +1,3 @@
+fat16.o: fat16.c fat16.h
+main.o: main.c fat16.h
+fat16.o: fat16.h
